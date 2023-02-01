@@ -5,39 +5,31 @@
 import sys
 import time
 import subprocess
+from absl import app,flags
 
 WORK_MINUTES = 25
 BREAK_MINUTES = 5
 CYCLES = 1
-
-def main():
-    args_len = len(sys.argv)
-    if args_len == 1 or args_len == 3 or args_len == 5 or args_len == 7:
-        args_dict = {}
-        for i in range(1,args_len,2):
-            args_dict[sys.argv[i]] = sys.argv[i+1]
+flags.DEFINE_integer("t",25,"设置工作时长")
+flags.DEFINE_integer("b",5,"设置休息时长")
+flags.DEFINE_integer("c",1,"设置循环次数")
+FLAGS=flags.FLAGS
     
-        Exec(args_dict)
-    elif sys.argv[1] == '-h':
-        help()
-    else:
-        print("参数输入不符合规范")
-
-def Exec(args_dict):
+    
+def main(argv):
     work_minutes = WORK_MINUTES
     break_minutes = BREAK_MINUTES
     cycles = CYCLES
     try:
-        for key in args_dict.keys():
-            if key == '-t':
-                work_minutes = int(args_dict[key])
-            
-            if key ==  '-b':
-                break_minutes = int(args_dict[key])
-
-            if key == '-c':
-                cycles = int(args_dict[key])
-
+        if FLAGS.t:
+            work_minutes = FLAGS.t
+        
+        if FLAGS.b:
+            break_minutes = FLAGS.b 
+        
+        if FLAGS.c:
+            cycles = FLAGS.c
+        
         for i in range(int(cycles)):
             print(f'🍅 工作 {work_minutes} 分钟. Ctrl+C to exit')
             tomato(work_minutes, '是时候去休息了')
@@ -110,16 +102,6 @@ def notify_me(msg):
         pass
 
 
-def help():
-    appname = sys.argv[0]
-    appname = appname if appname.endswith('.py') else 'tomato'  # tomato is pypi package
-    print('====== 🍅 Tomato Clock =======')
-    print(f'{appname}         # 工作 {WORK_MINUTES} 分钟 ，休息 {BREAK_MINUTES} 分钟')
-    print(f'{appname} -t <n>  # 工作 <n> 分钟')
-    print(f'{appname} -b <n>  # 休息 <n> 分钟')
-    print(f'{appname} -h      # 帮助')
-    print(f'{appname} -r <n>  # 循环 <n> 次番茄时间')
-
 
 if __name__ == "__main__":
-    main()
+    app.run(main)
