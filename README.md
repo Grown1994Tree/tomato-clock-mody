@@ -6,9 +6,8 @@
 # 增加了循环次数的配置
 
 ```shell
-./tomato.py         # 工作 25 分钟 ，休息 5 分钟
-./tomato.py -t <n>  # 工作 <n> 分钟
-./tomato.py -b <n>  # 休息 <n> 分钟
-./tomato.py -h      # 帮助
-./tomato.py -r <n>  # 循环 <n> 次番茄时间
+python ./tomato.py         # 工作 25 分钟 ，休息 5 分钟
+python ./tomato.py --t=<n>  # 工作 <n> 分钟
+python ./tomato.py -b=<n>  # 休息 <n> 分钟
+python ./tomato.py -c=<n>  # 循环 <n> 次番茄时间
 ```
